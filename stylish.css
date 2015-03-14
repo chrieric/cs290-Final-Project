@@ -1,0 +1,9 @@
+
+.loginSpacer{
+	height:25%;
+}
+ 
+.loginField{
+	display:flex;
+	align-items:center;
+}
