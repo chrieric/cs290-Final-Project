@@ -76,9 +76,9 @@ function signUp(user_name,pass_entered,pass_entered2)
 				//console.log('made it here 2');
 				if(request.responseText == 0)
 				{
-					log_message.innerHTML+='Error';
+					log_message.innerHTML+='Error, user name already exists';
 				}
-				else if(request.responseText==1)
+				else
 				{
 					log_message.innerHTML+='Account creation succesfull, please log in';
 					//window.location.href='Front_Page.php';

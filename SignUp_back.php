@@ -24,11 +24,18 @@ if(isset($_POST['username']) && isset($_POST['password']))
 	$user = $_POST['username'];
 	$password = $_POST['password'];
 	
-	$prepped = $connect->prepare("SELECT id FROM user WHERE user_name= :user AND password= :pass");
+	try{
+		$prepped = $connect->prepare("SELECT id FROM user WHERE user_name= :user");
 		
-	$prepped->execute(array(':user'=>$_POST['username'],':pass'=>$_POST['password']));
+		$prepped->execute(array(':user'=>$_POST['username']));
 	
-	$rows=$prepped->fetchAll();
+		$rows=$prepped->fetchAll();
+	}
+	catch(PDOException $e)
+	{
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
+	}
 	
 	if(!(count($rows) > 0))
 	{

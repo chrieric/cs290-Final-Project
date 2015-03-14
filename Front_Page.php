@@ -35,23 +35,20 @@ catch(PDOException $e)
 	if(!(isset($_SESSION['dropdown']))||$_SESSION['dropdown']=='Pilot')
 	{
 		//update for prep and binds?
-		if(!($stmt = connect->query("SELECT * FROM pilot")))
-		{
-			echo "Query failed: (" . $mysqli->errno . ") ". $mysqli->error;
-		}
+		$prepped = connect->prepare("SELECT * FROM pilot WHERE id=1 AND id=:id");
+		
+		$prepped->execute(array(':id'=>$_SESSION['username']));
 	}
 	else
 	{
 		$table_name=$_SESSION['dropdown'];
 		//update for prep and binds?
-		if(!($stmt= connect->query("SELECT * FROM $table_name")))
-		{
-			echo "Query failed: (" . $mysqli->errno . ") ". $mysqli->error;
-		}
+		$prepped = connect->prepare("SELECT * FROM $table_name WHERE id=1 AND id=:id");
+		
+		$prepped->execute(array(':id'=>$_SESSION['username']));
 	}
 	
 	$_SESSION['dropdown']='Pilot';
-?>
  
 	$curr_categories=array();
 	$row;
@@ -75,7 +72,7 @@ catch(PDOException $e)
 		
 		</tr>
 	}
-	
+?>	
 	
  
 </body>
