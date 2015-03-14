@@ -1,12 +1,10 @@
 <?php
-session_start();
-ob_start();
 error_reporting(E_ALL);
 ini_set('display_errors',1);
 
 
 $failure=0;
- 
+ /*
 $un = 'chrieric-db';
 $pass = 'KpqdL049GgphILrs';
 
@@ -87,7 +85,7 @@ function updateTable($array,$table_name)
 function deleteRow($array,$table_name,$identifier)
 {
 	global $connect;
-	$id=$array[$identifier]; /*this is just to inform me what should be here, change later*/
+	$id=$array[$identifier]; /*this is just to inform me what should be here, change later
 	$query_string="DELETE FROM $table_name WHERE id= ?";
 	
 	if($id!=null)
@@ -130,7 +128,7 @@ function deleteAll($array, $table_name)
 	
 	$stmt=null;
 };
-
+*/
 //creates a drop down menu when passed an array of values, the values will be the drop down's options
 function dropDown($id,array $options)
 {
@@ -140,7 +138,7 @@ function dropDown($id,array $options)
 	//number of selectable options
 	$len=count($options);
 	
-	$drop.='<option value="Default">Default</option>'."\n";
+	//$drop.='<option value="Default">Default</option>'."\n";
 	
 	//adds each selectable option
 	for($i=0;$i<$len;$i++)

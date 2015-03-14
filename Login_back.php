@@ -32,7 +32,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
 	
 	if(count($rows)==1)
 	{
-		$_SESSION['logged_user']=$rows['id'];
+		$_SESSION['user_id']=$rows['id'];
 		//echo $rows['id'];
 	}
 	$connect = null;

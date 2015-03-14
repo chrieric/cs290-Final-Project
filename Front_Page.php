@@ -1,7 +1,7 @@
 <?php
 ob_start();
 session_start();
-include 'QueryFunctions.php';
+include 'Query_Functions.php';
 error_reporting(E_ALL);
 ini_set('display_errors',1);
 
@@ -19,59 +19,85 @@ catch(PDOException $e)
 }
 ?>
  
- 
+
 <!DOCTYPE html>
 <html lang='en'>
 <head>
+<script src='buttons.js'></script>
 <title>Eve Database</title>
 <header>
-<h4>Database Collection</h4>
+<h4>Eve Database</h4>
 </header>
 </head>
 <body>
 <p>Use the drop down menu to select the table name you wish to display</p>
  
 <?php
+ 
 	if(!(isset($_SESSION['dropdown']))||$_SESSION['dropdown']=='Pilot')
 	{
 		//update for prep and binds?
-		$prepped = connect->prepare("SELECT * FROM pilot WHERE id=1 AND id=:id");
+		//$prepped = $connect->prepare("SELECT * FROM pilot WHERE id=1 AND id=:id");
 		
-		$prepped->execute(array(':id'=>$_SESSION['username']));
+		//$prepped->execute(array(':id'=>$_SESSION['username']));
+		
+		$prepped = $connect->prepare("SELECT * FROM pilot WHERE user_id=1");
+		
+		$prepped->execute();
 	}
 	else
 	{
 		$table_name=$_SESSION['dropdown'];
 		//update for prep and binds?
-		$prepped = connect->prepare("SELECT * FROM $table_name WHERE id=1 AND id=:id");
+		$prepped = $connect->prepare("SELECT * FROM $table_name WHERE id=1 AND id=:id");
 		
 		$prepped->execute(array(':id'=>$_SESSION['username']));
 	}
 	
 	$_SESSION['dropdown']='Pilot';
  
-	$curr_categories=array();
+ ?>
+ 
+ <table border='1'>
+	<thead>
+	</thead>
+	<tbody>
+ 
+ <?php
+ 
+	$curr_table=array('pilot','pilot_skill','skill','skill_req','ship_type','ship_req');
 	$row;
 	
 	//need to figure out how to get this to work for a "generalized" table
-	while($row = $stmt->fetchAll(PDO::FETCH_ASSOC))//stmt is current name of object, can be different
+	while($row = $prepped->fetch(PDO::FETCH_ASSOC))//stmt is current name of object, can be different
 	{
-		echo "<tr>"
+		echo "<tr>";
 		
 		foreach($row as $array => $key)
 		{
-			echo "<td>" . "$array[$key]" . "</td>"
+			echo '<td>' . $key . '</td>';
 		}
 		
-		echo "<td>";
-		echo "<form action='QueryFunctions.php' method='post'>";	//may need to alter this line
-		echo "<input type='hidden' name='id' value=\"".$row['id']."\">";
-		echo "<input type='submit' name='delete_movie' value='Delete'>";
-		echo "</form>";
-		echo "</td>";
+		/*
 		
-		</tr>
+		echo "<td>";
+		echo "deleteButton($table_name,$row['id'])";
+		echo "updateButton($table_name,$row['id'])";
+		echo "</td>";
+		*/
+		
+		echo "</tr>";
 	}
+	
+	echo "</tbody>";
+	$curr_table=array('Pilot','pilot_skill','skill','skill_req','ship_type','ship_req');
+	
+	echo "<form action='Query_Functions.php' method='post'>";
+	echo dropDown('dropdown',$curr_table);
+	echo "<input type='submit' name='dropselect' value='Select'>";
+	echo "</form>";
+	
+	$connect = null;
 ?>	
 	
  
