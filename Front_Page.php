@@ -4,12 +4,18 @@ session_start();
 include 'QueryFunctions.php';
 error_reporting(E_ALL);
 ini_set('display_errors',1);
-try {
-    $connect = new PDO('oniddb.cws.oregonstate.edu;dbname=chrieric-db', $user, $pass);
-    $connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-} catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
-    die();
+
+$un = 'chrieric-db';
+$pass = 'KpqdL049GgphILrs';
+
+try{
+	$connect = new PDO("mysql:host=oniddb.cws.oregonstate.edu;dbname=chrieric-db",$un,$pass);
+	$connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+}
+catch(PDOException $e)
+{
+	print "Error!:".$e->getMessage()."<br/>";
+	die();
 }
 ?>
  

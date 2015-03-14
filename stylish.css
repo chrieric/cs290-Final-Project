@@ -1,9 +1,13 @@
 
+
+
 .loginSpacer{
-	height:25%;
+	border-style:solid;
 }
  
 .loginField{
-	display:flex;
-	align-items:center;
+	float:left;
 }
+
+.signUpField{
+	float:left;

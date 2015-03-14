@@ -3,23 +3,35 @@
 <meta charset="utf-8"/>
 <head>
 <link rel="stylesheet" type="text/css" href="stylish.css">
+<script src='Requests.js'></script>
 <title>Login</title>
 </head>
 <body>
-<div class='loginSpacer'></div>
-<div class='loginField'>
-	<form action='login.js' method='post'>
-	User Name
-	<input type='text' name='username' value = 'User Name' id='username' required><br>
-	Password
-	<input type='password' name='password' value = '*****' id='password'><br>
-	<input type='submit' value = 'Login'>
-	or
-	<input type='button' value='Register' onclick='Sign_Up.html' id='sign_up_button'>
-	</form>
+<div class='loginSpacer'>
+	<div class='loginField'>
+		Login
+		<form>
+		User Name
+		<input type='text' name='username' id='username' required><br>
+		Password
+		<input type='password' name='password' id='password'><br>
+		<input type='button' value = 'Login' onclick='login(username.value,password.value)'>
+		</form>
+		<div id='login_message'>_</div> 
+	</div>
+	<div class='signUpField'>
+		Sign-Up
+		<form action='Request.js' method='post'>
+		User Name
+		<input type='text' name='username_sign' id='username_sign' required><br>
+		Password
+		<input type='password' name='password_sign' id='password_sign'><br>
+		Re-enter Password
+		<input type='password' name='password_sign2' id='password_sign2'><br>
+		<input type='button' value = 'Create' onclick='signUp(username_sign.value,password_sign.value,password_sign2.value)'>
+		</form>
+		<div id='login_message2'>_</div> 
+	</div>
 </div>
-<div id='login_message'>
-Error
-</div> 
 </body>
 </html>

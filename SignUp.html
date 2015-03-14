@@ -3,19 +3,21 @@
 <meta charset="utf-8"/>
 <head>
 <link rel="stylesheet" type="text/css" href="stylish.css">
+<script src='Requests.js'></script>
 <title>Sign Up</title>
 </head>
 <body>
 <div class='loginSpacer'></div>
 <div class='loginField'>
-	<form action='login.js' method='post'>
+	<form action='Request.js' method='post'>
 	User Name
-	<input type='text' name='username' value = 'User Name' id='username' required><br>
+	<input type='text' name='username' id='username' required><br>
 	Password
-	<input type='password' name='password' value = '*****' id='password'><br>
-	<input type='password' name='password2' value= '*****' id='password2'><br>
-	<input type='submit' value = 'Create New'>
+	<input type='password' name='password' id='password'><br>
+	<input type='password' name='password2' id='password2'><br>
+	<input type='button' value = 'Create' onclick='signUp(username.value,password.value,password2.value)'>
 	</form>
 </div>
+<div id='login_message'>_</div> 
 </body>
 </html>
