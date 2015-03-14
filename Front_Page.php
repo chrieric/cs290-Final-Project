@@ -44,7 +44,7 @@ catch(PDOException $e)
 	{
 		$table_name=$_SESSION['dropdown'];
 		//update for prep and binds?
-		if(!($stmt=connect->query("SELECT * FROM $table_name")))
+		if(!($stmt= connect->query("SELECT * FROM $table_name")))
 		{
 			echo "Query failed: (" . $mysqli->errno . ") ". $mysqli->error;
 		}

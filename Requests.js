@@ -23,6 +23,7 @@ function login(user_name,pass_entered)
 			//console.log('made it here'); for testing
 			if(request.readyState == 4 && request.status == 200)
 			{
+				alert(request.responseText);
 				if(request.responseText == 0)
 				{
 					log_message.innerHTML+='Wrong username or password. Please try again';
