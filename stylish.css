@@ -1,5 +1,14 @@
 
 
+body{
+	background-color:#514e4e;
+	color:#FFFFFF;
+	
+}
+
+selector{
+	float:left;
+}
 
 .loginSpacer{
 	border-style:solid;

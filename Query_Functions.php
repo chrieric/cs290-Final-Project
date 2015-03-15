@@ -5,7 +5,7 @@ ini_set('display_errors',1);
 
 $failure=0;
  
- /*
+/*
 $un = 'chrieric-db';
 $pass = 'KpqdL049GgphILrs';
 
@@ -18,101 +18,163 @@ catch(PDOException $e)
 	print "Error!:".$e->getMessage()."<br/>";
 	die();
 }
-
+*/
 //these functions are rewritten for the PDO object from a previous assignment, no testing yet
 
 
-//Attempt at a general function to update any table if given the table name
-function updateTable($array,$table_name)
+//Adds a pilot to the pilot table
+function addPilot($data)
 {
-	global $connect;
-	global $e;
-	$param_type = array();
-	$r_param_type =array();
-	$temp="";
-	$query_string = "INSERT INTO $table_name ("
- 
-	//if the array passed is larger than 0 it will build a query
-	//based on the values in the table
-	if(count($array) > 0)
-	{
-		foreach($array as $value => $key)
-		{
-			$query_string.=$value[$key];
-			$query_string.=", ";
-			$temp = gettype($value[$key]);
-			array_push($param_type,$temp[0]);
-		}
+	$first = $data['first_name'];
+	$last = $data['last_name'];
+	$race = $data['race'];
+	$user = $data['user_id'];
 		
-		chop($query_string,",");
-		
-		$query_string.=" VALUES (";
-		
-		foreach($array as $value)
-		{
-			$query_string.="?,";
-		}
-		
-		chop($query_string,",");
-		
-		$query_string.=")";
-		
-		$r_param_type=&$param_type;
-	
-		try{
-			$prepped=$connect->prepare($query_string);
-			
-			$prepped->execute($param_type); //this is not complete, need to look at example
-			//page again to better understand how they are carrying this out
-		}
-		catch
-		{
-			echo "Error!". $e->getMessage() . <br/>;
-			die();
-		}
-		
-		$prepped = null;
-	
+	$un = 'chrieric-db';
+	$pass = 'KpqdL049GgphILrs';
+
+	try{
+		$connect = new PDO("mysql:host=oniddb.cws.oregonstate.edu;dbname=chrieric-db",$un,$pass);
+		$connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	}
-	else
+	catch(PDOException $e)
 	{
-		$failure=1;
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
+	}	
 		
-		echo "Error occured while processing your request, click <a href='front_page.php'>here</a> to return to your inventory.";
+	try{
+		$prep = $connect->prepare("INSERT INTO pilot (first_name,last_name,race,user_id) VALUES(:first_name,:last_name,:race,:user)");
+		
+		$prep->execute(array(":first_name" => $first, ":last_name" => $last, ":race" => $race,":user" =>$user));
 	}
+	catch(PDOException $e)
+	{
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
+	}
+	
+	$connect = null;
+	
+};
+
+//adds a skill to the skill table
+function addSkill($data)
+{
+	$name = $data['name'];
+	$user = $data['user_id'];
+		
+	$un = 'chrieric-db';
+	$pass = 'KpqdL049GgphILrs';
+
+	try{
+		$connect = new PDO("mysql:host=oniddb.cws.oregonstate.edu;dbname=chrieric-db",$un,$pass);
+		$connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+	}
+	catch(PDOException $e)
+	{
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
+	}	
+		
+	try{
+		$prep = $connect->prepare("INSERT INTO skill (name,user_id) VALUES(:name,:user)");
+		
+		$prep->execute(array(":name" => $name,":user" =>$user));
+	}
+	catch(PDOException $e)
+	{
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
+	}
+	
+	$connect = null;
+	
+};
+
+//adds a ship to the ship_type table
+function addShip($data)
+{
+	$name = $data['name'];
+	$class = $data['class'];
+	$high = $data['high_slot_mods'];
+	$med = $data['med_slot_mods'];
+	$low = $data['low_slot_mods'];
+	$shield = $data['shield_hp'];
+	$armor = $data['armor_hp'];
+	$hull = $data['hull_hp'];
+	$speed = $data['max_speed'];
+	$CPU = $data['CPU'];
+	$PG = $data['PG'];
+	$user = $data['user_id'];
+		
+	$un = 'chrieric-db';
+	$pass = 'KpqdL049GgphILrs';
+
+	try{
+		$connect = new PDO("mysql:host=oniddb.cws.oregonstate.edu;dbname=chrieric-db",$un,$pass);
+		$connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+	}
+	catch(PDOException $e)
+	{
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
+	}	
+		
+	try{
+		$prep = $connect->prepare("INSERT INTO ship_type (name,class,high_slot_mods,med_slot_mods,low_slot_mods,shield_hp,armor_hp,hull_hp,max_speed,CPU,PG,user_id) VALUES(:name,:class,:high,:med,:low,:shield,:armor,:hull,:speed,:CPU,:PG,:user)");
+		
+		$prep->execute(array(":name" => $name,":class" =>$class,":high" =>$high,":med" =>$med,":low" =>$low,":shield" =>$shield,":armor" =>$armor,":hull" =>$hull,":speed" =>$speed,":CPU" =>$CPU,":PG" =>$PG,":user" =>$user));
+	}
+	catch(PDOException $e)
+	{
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
+	}
+	
+	$connect = null;
+	
 };
 
 //attempt at a general function to delete a row given the row's identifier and the table's name
-function deleteRow($array,$table_name,$identifier)
+
+
+function deleteRow($data)
 {
-	global $connect;
-	$id=$array[$identifier]; /*this is just to inform me what should be here, change later
-	$query_string="DELETE FROM $table_name WHERE id= ?";
+	$id = $data['id'];
+	$user = $data['user'];
+	$table = $data['t_name'];
 	
-	if($id!=null)
-	{
-		try{
-			$prepped=$connect->prepare($query_string);
-			
-			$prepped->bind('i',$id);
-			
-			$prepped->execute();
-		}
-		catch
-		{
-			echo "Error!". $e->getMessage() . <br/>;
-			die();
-		}
-		
-		$connect=null;
+	$un = 'chrieric-db';
+	$pass = 'KpqdL049GgphILrs';
+
+	try{
+		$connect = new PDO("mysql:host=oniddb.cws.oregonstate.edu;dbname=chrieric-db",$un,$pass);
+		$connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
 	}
-	else
+	catch(PDOException $e)
 	{
-		echo "Identifier not found click <a href='front_page.php'>here</a> to return to your tables.";
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
 	}
+	
+	try{
+		$prep = $connect->prepare("DELETE FROM $table WHERE id=:id AND user_id=:user");
+			
+		$prep->execute(array(":id" => $id, ":user" => $user));
+	}
+	catch(PDOException $e)
+	{
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
+	}
+
+	$connect = null;
 };
 
-//will delete all values from a table of the given table name
+
+/*
+//will delete all values from a table of the given table name, use only for testing
 function deleteAll($array, $table_name)
 {
 	global $connect;
@@ -138,8 +200,6 @@ function dropDown($id,array $options)
 	
 	//number of selectable options
 	$len=count($options);
-	
-	//$drop.='<option value="Default">Default</option>'."\n";
 	
 	//adds each selectable option
 	for($i=0;$i<$len;$i++)
