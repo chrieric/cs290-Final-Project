@@ -33,7 +33,13 @@ catch(PDOException $e)
 <p>Use the drop down menu to select the table name you wish to display</p>
  
 <?php
+	
  
+	$table_fields;
+	$table_name = 'Pilot';
+	
+	//$_SESSION['dropdown']='Pilot';
+	
 	if(!(isset($_SESSION['dropdown']))||$_SESSION['dropdown']=='Pilot')
 	{
 		//update for prep and binds?
@@ -44,22 +50,68 @@ catch(PDOException $e)
 		$prepped = $connect->prepare("SELECT * FROM pilot WHERE user_id=1");
 		
 		$prepped->execute();
+		
+		$prep2 = $connect->prepare("DESCRIBE pilot");
+		$prep2->execute();
+		
+		$table_fields=$prep2->fetchAll(PDO::FETCH_COLUMN);
 	}
 	else
 	{
 		$table_name=$_SESSION['dropdown'];
-		//update for prep and binds?
-		$prepped = $connect->prepare("SELECT * FROM $table_name WHERE id=1 AND id=:id");
 		
-		$prepped->execute(array(':id'=>$_SESSION['username']));
+		$query_string = "SELECT * FROM $table_name";
+		
+		//update for prep and binds?
+		//$prepped = $connect->prepare("SELECT * FROM $table_name WHERE id=1 AND id=:id");
+		
+		//$prepped->execute(array(':id'=>$_SESSION['username']));
+		
+		if($table_name == 'skill' || $table_name == 'ship_type')
+		{
+			$query_string.=" WHERE user_id=1";
+		}
+		
+		$prepped = $connect->prepare($query_string);
+		
+		$prepped->execute();
+		
+		$prep2 = $connect->prepare("DESCRIBE $table_name");
+		$prep2->execute();
+		
+		$table_fields=$prep2->fetchAll(PDO::FETCH_COLUMN);
 	}
 	
 	$_SESSION['dropdown']='Pilot';
+	
+	$curr_table=array('Pilot','pilot_skill','skill','skill_req','ship_type','ship_req');
+	
+	echo "<form action='Back_Page.php' method='post'>";
+	echo dropDown('dropdown',$curr_table);
+	echo "<input type='submit' name='dropselect' value='Select'>";
+	echo "</form>";
+ 
+	echo"<form action='Back_Page.php' method='post'>";
+	echo "<input type='submit' name=add_row' value='Add'>";
+	foreach($table_fields as $field => $keyf)
+	{	
+		echo $keyf;
+		echo "<input type='text' id=\"".$keyf."\">";
+	}
+	
+	echo "</form>";
  
  ?>
  
  <table border='1'>
 	<thead>
+<?php	
+	//displays column heads
+	foreach($table_fields as $step => $keys)
+	{
+		echo '<th>' .$keys.'</th>';
+	}
+?>	
 	</thead>
 	<tbody>
  
@@ -78,25 +130,27 @@ catch(PDOException $e)
 			echo '<td>' . $key . '</td>';
 		}
 		
-		/*
+		echo "<td>";
+		echo "<form action='QueryFunctions.php' method='post'>";
+		echo "<input type='hidden' name='id' value=\"".$row['id']."\">";
+		echo "<input type='submit' name='update_row' value='Update'>";
+		echo "</form>";
+		echo "</td>";
 		
 		echo "<td>";
-		echo "deleteButton($table_name,$row['id'])";
-		echo "updateButton($table_name,$row['id'])";
+		echo "<form action='Back_Page.php' method='post'>";
+		echo "<input type='hidden' name='id' value=\"".$row['id']."\">";
+		echo "<input type='hidden' name='id' value=\"".$table_name."\">";
+		echo "<input type='submit' name='delete_row' value='Delete'>";
+		echo "</form>";
 		echo "</td>";
-		*/
 		
 		echo "</tr>";
 	}
 	
 	echo "</tbody>";
-	$curr_table=array('Pilot','pilot_skill','skill','skill_req','ship_type','ship_req');
-	
-	echo "<form action='Query_Functions.php' method='post'>";
-	echo dropDown('dropdown',$curr_table);
-	echo "<input type='submit' name='dropselect' value='Select'>";
-	echo "</form>";
-	
+
+
 	$connect = null;
 ?>	
 	
