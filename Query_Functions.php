@@ -233,9 +233,21 @@ function logOut()
 
 /*
 //will delete all values from a table of the given table name, use only for testing
-function deleteAll($array, $table_name)
+function deleteAll($array)
 {
 	global $connect;
+	
+	$table_name=$array['table_name'];
+	
+	try{
+		$connect = new PDO("mysql:host=oniddb.cws.oregonstate.edu;dbname=chrieric-db",$un,$pass);
+		$connect->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+	}
+	catch(PDOException $e)
+	{
+		print "Error!:".$e->getMessage()."<br/>";
+		die();
+	}
 	
 	try {
     		$stmt=$connect->prepare("DELETE FROM $table_name")
