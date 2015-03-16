@@ -75,11 +75,11 @@ function signUp(user_name,pass_entered,pass_entered2)
 				//console.log('made it here 2');
 				if(!request.responseText)
 				{
-					log_message.innerHTML+='Error, user name already exists';
+					log_message.innerHTML+='User name already exists';
 				}
 				else if(request.responseText == 1)
 				{
-					log_message.innerHTML+='Account creation succesfull, please log in';
+					log_message.innerHTML+='Account creation succesfull.';
 				}
 			}
 		}

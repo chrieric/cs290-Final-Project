@@ -18,9 +18,9 @@
 		<input type='text' name='username' id='username' required><br>
 		<label class='smallfield' for='password'>Password</label>
 		<input type='password' name='password' id='password'><br>
-		<input type='button' value = 'Login' onclick='login(username.value,password.value)'>
+		<input class='login_button' type='button' value = 'Login' onclick='login(username.value,password.value)'>
 		</form>
-		<div id='login_message'></div> 
+		<div class='login_message' id='login_message'></div> 
 	</div>
 	<div class='signUpField'>
 		<label class='bigfield'>Sign-Up</label>
@@ -33,8 +33,10 @@
 		<input type='password' name='password_sign2' id='password_sign2'><br>
 		<input type='button' value = 'Create' onclick='signUp(username_sign.value,password_sign.value,password_sign2.value)'>
 		</form>
-		<div id='login_message2'></div> 
-	</div>
+		<div class='login_message2' id='login_message2'></div>
+	</div> 
 </div>
+
+
 </body>
 </html>
