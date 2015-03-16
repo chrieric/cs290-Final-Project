@@ -3,34 +3,37 @@
 <meta charset="utf-8"/>
 <head>
 <link rel="stylesheet" type="text/css" href="stylish.css">
-<script src='Requests.js'></script>
+<script type="text/javascript" src='Requests.js'></script>
+<header>
+<h1>Eve Database</h1>
+</header>
 <title>Login</title>
 </head>
 <body>
 <div class='loginSpacer'>
 	<div class='loginField'>
-		Login
+		<label class='bigfield'>Login</label>
 		<form>
-		User Name
+		<label class='smallfield' for='username'>User Name</label>
 		<input type='text' name='username' id='username' required><br>
-		Password
+		<label class='smallfield' for='password'>Password</label>
 		<input type='password' name='password' id='password'><br>
 		<input type='button' value = 'Login' onclick='login(username.value,password.value)'>
 		</form>
-		<div id='login_message'>_</div> 
+		<div id='login_message'></div> 
 	</div>
 	<div class='signUpField'>
-		Sign-Up
+		<label class='bigfield'>Sign-Up</label>
 		<form action='Request.js' method='post'>
-		User Name
+		<label class='smallfield' for='username_sign'>User Name</label>
 		<input type='text' name='username_sign' id='username_sign' required><br>
-		Password
+		<label class='smallfield' for='password_sign'>Password</label>
 		<input type='password' name='password_sign' id='password_sign'><br>
-		Re-enter Password
+		<label class='smallfield' for='password_sign2'>Re-enter Password</label>
 		<input type='password' name='password_sign2' id='password_sign2'><br>
 		<input type='button' value = 'Create' onclick='signUp(username_sign.value,password_sign.value,password_sign2.value)'>
 		</form>
-		<div id='login_message2'>_</div> 
+		<div id='login_message2'></div> 
 	</div>
 </div>
 </body>

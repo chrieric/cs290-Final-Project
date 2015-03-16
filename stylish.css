@@ -1,8 +1,18 @@
 
 
+header{
+	padding-top:5px;
+	text-align:center;
+	background-color:black;
+	height:120px;
+	font-size:30px;
+}
+
 body{
 	background-color:#514e4e;
-	color:#FFFFFF;
+	color:#c18831;
+	font-family:trebuchet MS;
+	font-size:13px;
 	
 }
 
@@ -10,13 +20,126 @@ selector{
 	float:left;
 }
 
+label{
+	background-color:black;
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 100px;
+    text-align: left;
+}
+
+button{
+	background-color:black;
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 50px;
+    text-align: left;
+}
+
+input {
+  display: inline-block;
+  float: left;
+}
+
+input[type="text"], textarea {
+
+  background-color : #AAAAAA;
+  margin:10px;
+
+
+}
+input[type="password"], textarea {
+
+  background-color : #AAAAAA;
+  margin:10px;
+
+}
+
+table{
+	background-color:black;
+	padding:25px;
+}
+
+table, tr, td{
+	white-space: nowrap;
+}
+
+.user_info{
+	float:right;
+}
+
+.drop_selector{
+	float:right;
+	
+}
+
+.drop_text{
+	font-size:13px;
+	background-color:black;
+    display: inline-block;
+    float: left;
+    clear: left;
+    width: 100px;
+    text-align: left;
+}
+
+.add_button_text{
+	font-size:13px;
+}
+
+.add_button_div{
+	padding-left:20px;
+	float:left;
+	height:2000px;
+	width:225px;
+	background-color:black;
+}
+
+.table_div{
+	width: 70%;
+    height: 2000px;
+    overflow:hidden;
+	background-color:#514e4e;
+	
+}
+
 .loginSpacer{
-	border-style:solid;
+	background-color:black;
+	box-shadow:10px 10px 5px #858585;
+	width: 600px;
+    height: 275px;
+    position: absolute;
+    top:-200px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    margin: auto;
 }
  
 .loginField{
+	margin:5px;
+	padding:10px;
 	float:left;
 }
 
 .signUpField{
-	float:left;
+	margin:5px;
+	padding:10px;
+	overflow:hidden;
+}
+
+.bigfield{
+	text-align:center;
+	font-size:20px;
+}
+
+.smallfield{
+	width:50px !important;
+}
+
+.login_message{
+	margin:3px;
+}

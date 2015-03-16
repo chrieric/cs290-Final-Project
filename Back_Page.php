@@ -23,12 +23,22 @@ catch(PDOException $e)
 
 */
 
-if(isset($_POST['delete_row']))
+if(isset($_POST['log_out']))
 {
-	deleteRow($_POST);
+	logOut();
 	
 	if($failure==0)
 	{
+		echo '<script type="text/javascript">window.location = "Login.html";</script>';
+	}
+}
+
+if(isset($_POST['delete_row']))
+{
+	deleteRow($_POST);
+	$_SESSION['dropdown']=$_POST['t_name'];
+	if($failure==0)
+	{	
 		header("Location:Front_Page.php");
 		$_POST = array();
 	}
@@ -37,7 +47,7 @@ if(isset($_POST['delete_row']))
 if(isset($_POST['add_skill']))
 {
 	addSkill($_POST);
-	
+	$_SESSION['dropdown']='skill';
 	if($failure==0)
 	{
 		header("Location:Front_Page.php");
@@ -48,7 +58,7 @@ if(isset($_POST['add_skill']))
 if(isset($_POST['add_ship_type']))
 {
 	addShip($_POST);
-	
+	$_SESSION['dropdown']='ship_type';
 	if($failure==0)
 	{
 		header("Location:Front_Page.php");
@@ -56,10 +66,10 @@ if(isset($_POST['add_ship_type']))
 	}
 }
 
-if(isset($_POST['add_Pilot']))
+if(isset($_POST['add_pilot']))
 {
 	addPilot($_POST);
-	
+	$_SESSION['dropdown']='pilot';
 	if($failure==0)
 	{
 		header("Location:Front_Page.php");

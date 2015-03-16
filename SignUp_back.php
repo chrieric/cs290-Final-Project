@@ -29,7 +29,7 @@ if(isset($_POST['username']) && isset($_POST['password']))
 		
 		$prepped->execute(array(':user'=>$_POST['username']));
 	
-		$rows=$prepped->fetchAll();
+		$rows=$prepped->fetch(PDO::FETCH_ASSOC);
 	}
 	catch(PDOException $e)
 	{
@@ -37,23 +37,14 @@ if(isset($_POST['username']) && isset($_POST['password']))
 		die();
 	}
 	
-	if(!(count($rows) > 0))
+	if(!isset($rows['id']))
 	{
 		$prepped = $connect->prepare("INSERT INTO user (user_name,password) VALUES(:user,:pass)");
 		
 		$prepped->execute(array(':user'=>$user,':pass'=>$password));
+		
+		echo 1;
 	}
-
-
-	/*
-	$rows=$prepped->fetchAll()
- 
-	if(count($rows)==1)
-	{
-		$_SESSION['logged_user']=$rows['id'];
-		echo $rows['id'];
-	}
-	*/
 	
 	$connect = null;
 }

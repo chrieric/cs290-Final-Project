@@ -24,15 +24,16 @@ if(isset($_POST['username']) && isset($_POST['password']))
 
 	//would this be better to include a bind statement and get our username and password into the prepared statement
 	//in that way? either way SHOULD work, bind is the way we were taught...
-	$prepped = $connect->prepare("SELECT id FROM user WHERE user_name= :user AND password= :pass");
+	$prepped = $connect->prepare("SELECT id, user_name FROM user WHERE user_name= :user AND password= :pass");
 		
 	$prepped->execute(array(':user'=>$_POST['username'],':pass'=>$_POST['password']));
 	
-	$rows=$prepped->fetchAll();
+	$rows=$prepped->fetch(PDO::FETCH_ASSOC);
 	
-	if(count($rows)==1)
+	if(isset($rows['id']))
 	{
 		$_SESSION['user_id']=$rows['id'];
+		$_SESSION['user_name']=$rows['user_name'];
 		echo 1;
 	}
 	$connect = null;

@@ -173,6 +173,14 @@ function deleteRow($data)
 };
 
 
+function logOut()
+{
+	session_destroy();
+	unset($_SESSION['user_name']);
+	unset($_SESSION['user_id']);
+	unset($_SESSION['dropdown']);
+}
+
 /*
 //will delete all values from a table of the given table name, use only for testing
 function deleteAll($array, $table_name)
