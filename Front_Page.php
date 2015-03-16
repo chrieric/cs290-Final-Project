@@ -54,8 +54,10 @@ catch(PDOException $e)
 </header>
 </head>
 <body>
-<div class='drop_selector'>
-<p class='drop_text'>Use the drop down menu to select a table</p>
+<div class='add_button_div'>
+<div class='drop_text'>
+Use the drop down menu to select a table.
+</div>
  
 <?php
 	
@@ -139,15 +141,22 @@ catch(PDOException $e)
 	$curr_table=array('Pilot','skill','ship_type');
 	//$curr_table=array('Pilot','pilot_skill','skill','skill_req','ship_type','ship_req');
 	
+	
+	//echo "<div class='add_button_div'>";
 	//the below code creates a drop down menu to allow the user to specify which table they want to view
+	echo "<div class='drop_select'>";
 	echo "<form action='Back_Page.php' method='post'>";
 	echo dropDown('dropdown',$curr_table);
-	echo "<input type='submit' name='dropselect' value='Select'>";
+	echo "<input class='select_button' type='submit' name='dropselect' value='Select'>";
 	echo "</form>";
 	echo "</div>";
- 
-	echo "<div class='add_button_div'>";
+	echo "<br>";
+	echo "<br>";
+	echo "<br>";
 	
+	echo "<div class='add_text'>";
+	echo "<b>Add Row</b>";
+	echo "</div>";
 	//variable dependent on currently selected table
 	$add_row = 'add_'.$table_name;
 	
@@ -167,7 +176,6 @@ catch(PDOException $e)
 	//creates rest of input and button to send data
 	echo "<input type='hidden' name=user_id value=\"".$user_session."\">";
 	echo "<input type='submit' name=$add_row id = 'Add' value='Add'>";
-	echo "<label class='add_button_text' for='Add'>Add table row</label>";
 	echo "</form>";
 	echo "</div>";
  ?>

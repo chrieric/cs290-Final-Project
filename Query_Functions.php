@@ -29,6 +29,8 @@ function addPilot($data)
 	$last = $data['last_name'];
 	$race = $data['race'];
 	$user = $data['user_id'];
+	
+	global $failure;
 		
 	$un = 'chrieric-db';
 	$pass = 'KpqdL049GgphILrs';
@@ -42,16 +44,39 @@ function addPilot($data)
 		print "Error!:".$e->getMessage()."<br/>";
 		die();
 	}	
-		
+	
 	try{
-		$prep = $connect->prepare("INSERT INTO pilot (first_name,last_name,race,user_id) VALUES(:first_name,:last_name,:race,:user)");
+		$check = $connect->prepare("SELECT id FROM pilot WHERE first_name=:first AND last_name=:last");
 		
-		$prep->execute(array(":first_name" => $first, ":last_name" => $last, ":race" => $race,":user" =>$user));
+		$check->execute(array(":first" => $first, ":last" => $last));
+		
+		$checked=$check->fetch(PDO::FETCH_ASSOC);
 	}
 	catch(PDOException $e)
 	{
 		print "Error!:".$e->getMessage()."<br/>";
 		die();
+	}	
+	
+	if(!isset($checked['id']))
+	{
+
+			try{
+				$prep = $connect->prepare("INSERT INTO pilot (first_name,last_name,race,user_id) VALUES(:first_name,:last_name,:race,:user)");
+		
+				$prep->execute(array(":first_name" => $first, ":last_name" => $last, ":race" => $race,":user" =>$user));
+			}
+			catch(PDOException $e)
+			{
+				print "Error!:".$e->getMessage()."<br/>";
+				die();
+			}
+	
+	}
+	else
+	{
+		$failure=1;
+		echo "Cannot add pilot with same first and last name as previous entry, click here <a href='Front_Page.php'>here</a> to return to previous page.";
 	}
 	
 	$connect = null;
@@ -66,6 +91,8 @@ function addSkill($data)
 		
 	$un = 'chrieric-db';
 	$pass = 'KpqdL049GgphILrs';
+	
+	global $failure;
 
 	try{
 		$connect = new PDO("mysql:host=oniddb.cws.oregonstate.edu;dbname=chrieric-db",$un,$pass);
@@ -75,17 +102,40 @@ function addSkill($data)
 	{
 		print "Error!:".$e->getMessage()."<br/>";
 		die();
-	}	
-		
-	try{
-		$prep = $connect->prepare("INSERT INTO skill (name,user_id) VALUES(:name,:user)");
-		
-		$prep->execute(array(":name" => $name,":user" =>$user));
 	}
+
+	try{
+		$check = $connect->prepare("SELECT id FROM skill WHERE name=:name AND user_id=:user");
+		
+		$check->execute(array(":name" => $name, ":user" => $user));
+		
+		$checked=$check->fetch(PDO::FETCH_ASSOC);
+	}
+	
 	catch(PDOException $e)
 	{
 		print "Error!:".$e->getMessage()."<br/>";
 		die();
+	}	
+	
+
+	if(!isset($checked['id']))
+	{
+		try{
+			$prep = $connect->prepare("INSERT INTO skill (name,user_id) VALUES(:name,:user)");
+		
+			$prep->execute(array(":name" => $name,":user" =>$user));
+		}
+		catch(PDOException $e)
+		{
+			print "Error!:".$e->getMessage()."<br/>";
+			die();
+		}
+	}
+	else
+	{
+		$failure=1;
+		echo "Cannot add skill with same name as previous entry, click here <a href='Front_Page.php'>here</a> to return to previous page.";
 	}
 	
 	$connect = null;
