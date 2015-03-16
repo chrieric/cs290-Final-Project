@@ -31,7 +31,9 @@ catch(PDOException $e)
 		echo "You are currently logged in as $user";
 	
 		echo "<form action='Back_Page.php' method='post'>";
+		echo "<div class='log_out_button'>";
 		echo "<input type='submit' name='log_out' value='Log Out'>";
+		echo "</div>";
 		echo "</form>";
 		
 	}

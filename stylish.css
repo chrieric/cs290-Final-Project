@@ -69,6 +69,14 @@ table, tr, td{
 
 .user_info{
 	float:right;
+	padding-top:15px;
+	width:300px;
+}
+
+.log_out_button
+{
+	float:left;
+	margin:2px;
 }
 
 .add_button_div{
@@ -178,3 +186,4 @@ table, tr, td{
 {
 	margin-top:10px;
 }
+
